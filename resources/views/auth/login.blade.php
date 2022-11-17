@@ -30,8 +30,8 @@
         @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
             @if ($localeCode == LaravelLocalization::getCurrentLocale())
             @elseif($url = LaravelLocalization::getLocalizedURL($localeCode))
-                <a href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}"
-                    class="text-white"><i class="fas fa-globe h5"></i>
+                <a href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}" class="text-white"><i
+                        class="fas fa-globe h5"></i>
                     @if (app()->getLocale() == 'ar')
                         <span style="color: #fff;font-family: Tajawal;">English</span>
                     @else
@@ -74,13 +74,20 @@
                             @endif
                         </div>
                     </div>
-                    <div class="form-group text-center m-t-20">
+                    <div class="form-group text-center">
                         <div class="col-12">
                             <button class="btn btn-primary btn-block btn-lg waves-effect waves-light"
                                 type="submit">{{ __('admin.login') }}</button>
                         </div>
                     </div>
                 </form>
+                <div class="col-12">
+                    <button
+                        class="btn btn-primary btn-block btn-lg waves-effect waves-light">{{ __('admin.register') }}</button>
+                <button class="btn btn-primary btn-block btn-lg waves-effect waves-light"
+                        type="submit">{{ __('admin.forget') }}</button>
+                    </div>
+
             </div>
         </div>
         <span class="d-none d-sm-inline-block" style="color: #fff">{{ now()->year }} - Crafted with <i

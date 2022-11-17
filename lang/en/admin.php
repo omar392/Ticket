@@ -1,7 +1,9 @@
 <?php
 return [
+    'forget' => 'Are you forget password ?',
     'reload'=>'Reload',
     'signin'=>'Login',
+    'register'=>'Register',
     'login'=>'Login',
     'adminlogin'=>'Dashboard Login',
     'loginsuccess'=>'You are Login successfully',
