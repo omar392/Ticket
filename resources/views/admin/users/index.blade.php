@@ -25,7 +25,8 @@
                                 class="fas fa-plus-circle" style="padding-inline-end: 5px;"></i>{{ __('admin.add') }}
                             {{ __('admin.user') }}</button>
                     @endif
-                    <button type="button" class="btn btn-primary reload float-right mb-3"> <i class="fas fa-sync-alt"></i></button>
+                    <button type="button" class="btn btn-primary reload float-right mb-3"> <i
+                            class="fas fa-sync-alt"></i></button>
                 </div>
 
                 <!--  Modal content for the above example -->
@@ -53,8 +54,8 @@
                                                 <label for="example-text-input"
                                                     class="col-sm-2 col-form-label">{{ __('admin.name') }}</label>
                                                 <div class="col-sm-10">
-                                                    <input class="form-control .inp1" value="{{ old('name') }}" type="text"
-                                                        name="name" id="example-text-input"
+                                                    <input class="form-control .inp1" value="{{ old('name') }}"
+                                                        type="text" name="name" id="example-text-input"
                                                         placeholder="{{ __('admin.name') }} ">
                                                 </div>
                                             </div>
@@ -82,16 +83,15 @@
                                                 </div>
                                             </div> --}}
                                             <div class="form-group row">
-                                                <label
-                                                    class="col-sm-2 col-form-label">{{ __('admin.user_type') }}</label>
+                                                <label class="col-sm-2 col-form-label">{{ __('admin.user_type') }}</label>
                                                 <div class="col-sm-10">
                                                     <select class="form-control form-control-round .inp3" name="user_type"
                                                         id="user_type">
                                                         <option value="customer">---</option>
-                                                            <option value="employee">{{ __('admin.employee') }}
-                                                            </option>
-                                                            <option value="customer">{{ __('admin.customer') }}
-                                                            </option>
+                                                        <option value="employee">{{ __('admin.employee') }}
+                                                        </option>
+                                                        <option value="customer">{{ __('admin.customer') }}
+                                                        </option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -142,6 +142,7 @@
                                     <th>{{ __('admin.phone') }}</th>
                                     <th>{{ __('admin.email') }}</th>
                                     <th>{{ __('admin.user_type') }}</th>
+                                    <th>{{ __('admin.status') }}</th>
                                     <th>{{ __('admin.action') }}</th>
                                 </tr>
                             </thead>
@@ -171,8 +172,8 @@
                     },
                     processing: true,
                     "language": {
-                    "processing": '<i class="fa fa-spinner fa-spin" style="font-size:24px;color:#E6554F;"></i>'
-                 },
+                        "processing": '<i class="fa fa-spinner fa-spin" style="font-size:24px;color:#E6554F;"></i>'
+                    },
                     serverSide: true,
                     ajax: "{{ route('users.index') }}",
                     columns: [{
@@ -194,6 +195,12 @@
                         {
                             data: 'user_type',
                             name: 'user_type'
+                        },
+                        {
+                            data: 'active',
+                            name: 'active',
+                            orderable: true,
+                            searchable: true
                         },
                         {
                             data: 'action',
@@ -210,8 +217,8 @@
                     },
                     processing: true,
                     "language": {
-                    "processing": '<i class="fa fa-spinner fa-spin" style="font-size:24px;color:#E6554F;"></i>'
-                 },
+                        "processing": '<i class="fa fa-spinner fa-spin" style="font-size:24px;color:#E6554F;"></i>'
+                    },
                     serverSide: true,
                     ajax: "{{ route('users.index') }}",
                     columns: [{
@@ -234,7 +241,12 @@
                             data: 'user_type',
                             name: 'user_type'
                         },
-
+                        {
+                            data: 'active',
+                            name: 'active',
+                            orderable: true,
+                            searchable: true
+                        },
                         {
                             data: 'action',
                             name: 'action',
@@ -249,13 +261,37 @@
             });
         });
     </script>
-     <script>
-
+        <script>
+        $('body').on('click', '#check', function() {
+            //e.preventDefault();
+            var active = $(this).prop('checked') == true ? 1 : 0;
+            var user_id = $(this).data('id');
+            // alert(user_id);
+            $.ajax({
+                url: '{{ route('users.status') }}',
+                type: 'GET',
+                data: {
+                    'active': active,
+                    'user_id': user_id
+                },
+                success: function(response) {
+                    if (response.status == 'success') {
+                        toastr.options = {
+                            "closeButton": true,
+                            "progressBar": true,
+                            "showDuration": 500,
+                        }
+                        toastr['success']("@lang('admin.statuschange')");
+                    }
+                }
+            });
+        });
+    </script>
+    <script>
         $('body').on('submit', '#adduser', function(e) {
             e.preventDefault();
-            if ($('.inp1').is(':empty') || $('.inp2').is(':empty') || $('.inp3').is(':empty') || $('.inp4').is(':empty')  || $('.inp5').is(':empty')){
-            }
-            else {
+            if ($('.inp1').is(':empty') || $('.inp2').is(':empty') || $('.inp3').is(':empty') || $('.inp4').is(
+                    ':empty') || $('.inp5').is(':empty')) {} else {
                 $.ajax({
                     url: '{{ route('users.store') }}',
                     method: "post",
@@ -264,7 +300,7 @@
                     cache: false,
                     contentType: false,
                     processData: false,
-                    success: function (response) {
+                    success: function(response) {
 
                         if (response.status == 'success') {
                             toastr.options = {
@@ -309,12 +345,12 @@
                     }
 
                 },
-                error: function (data) {
+                error: function(data) {
                     console.log('Error:', data);
                 }
             });
         })
-        $('body').on('click', '.delete', function (e) {
+        $('body').on('click', '.delete', function(e) {
             var that = $(this)
             e.preventDefault();
             Swal.fire({
@@ -328,7 +364,7 @@
                     cancelButton: 'btn btn-outline-danger ml-1'
                 },
                 buttonsStyling: false
-            }).then(function (result) {
+            }).then(function(result) {
                 if (result.isConfirmed) {
                     that.closest('form').submit();
                     Swal.fire({

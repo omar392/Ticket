@@ -5,6 +5,7 @@ return [
     'signin'=>'Login',
     'register'=>'Register',
     'login'=>'Login',
+    'password_confirmation' => 'تأكيد كلمة المرور',
     'adminlogin'=>'Dashboard Login',
     'loginsuccess'=>'You are Login successfully',
     'nologin'=>'You are not logged in, check your details',

@@ -3,6 +3,7 @@ return [
     'forget'=>'هل نسيت كلمة المرور ؟',
     'reload'=>'اعادة تحميل',
     'signin'=>'تسجيل الدخول',
+    'password_confirmation'=>'تأكيد كلمة المرور',
     'register' => 'إنشاء حساب',
     'adminlogin'=>'تسجيل الدخول | لوحة التحكم',
     'login'=>'تسجيل',

@@ -38,7 +38,28 @@ class UsersController extends Controller
                 //     $departments = $query->department()->first();
                 //     return $departments->name;
                 // })
-
+                ->editColumn('active', function ($query) {
+                    if ($query->active) {
+                        $btn = '
+                        <div class="container">
+                        <label class="switch">
+                          <input type="checkbox" data-id="' . $query->id . '" type="checkbox" id="check"  checked>
+                          <div class="slider round"></div>
+                        </label>
+                      </div>
+                      ';
+                    } else {
+                        $btn = '
+                        <div class="container">
+                        <label class="switch">
+                          <input type="checkbox" data-id="' . $query->id . '" type="checkbox" id="check">
+                          <div class="slider round"></div>
+                        </label>
+                      </div>
+                      ';
+                    }
+                    return $btn;
+                })
                 ->addColumn('action', function($row){
                     if (Auth::guard('admin')->user()->hasPermission('users-update')){
                         $Btn = '<a href="' .route("users.edit", $row->id). '"><button type="button"
@@ -54,7 +75,7 @@ class UsersController extends Controller
                     }
                     return $Btn;
                 })
-                ->rawColumns(['action','action'])
+                ->rawColumns(['action','active'])
                 ->make(true);
         }
         $departments = Department::get();
@@ -66,6 +87,13 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function usersStatus(Request $request)
+    {
+        $user = User::find($request->user_id);
+        $user->active = $request->active;
+        $user->save();
+        return response()->json(['status' => 'success', 'data' => $user]);
+    }
     public function create()
     {
         //

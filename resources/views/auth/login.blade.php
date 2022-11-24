@@ -81,12 +81,20 @@
                         </div>
                     </div>
                 </form>
-                <div class="col-12">
-                    <button
-                        class="btn btn-primary btn-block btn-lg waves-effect waves-light">{{ __('admin.register') }}</button>
-                <button class="btn btn-primary btn-block btn-lg waves-effect waves-light"
-                        type="submit">{{ __('admin.forget') }}</button>
+                <div class="form-group text-center">
+                    <div class="col-12">
+                        <button
+                            class="btn btn-primary btn-block btn-lg waves-effect waves-light">{{ __('admin.forget') }}</button>
                     </div>
+                </div>
+                <div class="form-group text-center">
+                    <div class="col-12">
+                        <a href="{{ route('register') }}"><button
+                                class="btn btn-primary btn-block btn-lg waves-effect waves-light">{{ __('admin.register') }}</button></a>
+                        {{-- <button class="btn btn-primary btn-block btn-lg waves-effect waves-light">{{ __('admin.forget') }}</button> --}}
+                    </div>
+                </div>
+
 
             </div>
         </div>

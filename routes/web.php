@@ -17,7 +17,7 @@ Route::group(
         'middleware' => [ 'localeSessionRedirect', 'localizationRedirect' ]
     ], function(){
 
-Auth::routes(['register'=>false]);
+Auth::routes(['verify'=>true]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::group(['middleware' => 'auth'], function () {

@@ -36,6 +36,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin']], function () 
 
     //users
     Route::resource('users', UsersController::class);
+    Route::get('users_status', [UsersController::class, 'usersStatus'])->name('users.status');
 
     //faqs
     Route::resource('faqs', FaqController::class);
